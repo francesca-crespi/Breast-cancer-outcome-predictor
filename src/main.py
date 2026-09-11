@@ -30,7 +30,7 @@ from train_models import (
 from results import compile_metrics_summary, plot_confusion_matrices
 
 
-DATA_ZIP_PATH = PROJECT_ROOT / "data" / "archive.zip"
+DATA_ZIP_PATH = PROJECT_ROOT / "data" / "data.zip"
 EXTRACT_DIR = PROJECT_ROOT / "data_extracted"
 
 
