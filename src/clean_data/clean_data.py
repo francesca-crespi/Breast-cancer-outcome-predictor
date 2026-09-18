@@ -27,3 +27,25 @@ def clean_breast_cancer_data(df):
     print(f"Shape of dataset after cleaning: {df_clean.shape}")
 
     return df_clean
+if __name__ == "__main__":
+    import pandas as pd
+    
+    # 1. Definimos la ruta correcta hacia tu archivo
+    # Como tu script está en src/clean_data/ y el archivo está en la carpeta data de la raíz:
+    ruta_dataset = "data/data.zip" 
+    
+    print("--- Cargando los datos de Cáncer de Mama ---")
+    
+    try:
+        # 2. Leemos el archivo utilizando pandas
+        df_original = pd.read_csv(ruta_dataset)
+        print("¡Dataset cargado con éxito!")
+        print("-" * 40)
+        
+        # 3. Llamamos a tu función para que limpie e imprima los missing values
+        clean_breast_cancer_data(df_original)
+        
+    except FileNotFoundError:
+        print(f"Error: No se encontró el archivo en la ruta '{ruta_dataset}'.")
+        print("Revisa si tu archivo se llama 'data.csv', 'data.txt' o si está en otra carpeta.")
+
