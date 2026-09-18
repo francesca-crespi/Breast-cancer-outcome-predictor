@@ -116,3 +116,38 @@ def random_forest_feature_importance(model, feature_names, top_n=15):
     plt.show()
 
     return importances
+if __name__ == "__main__":
+    from pathlib import Path
+    import pandas as pd
+    import zipfile
+    
+    # 1. Definir rutas y extraer datos si es necesario
+    script_dir = Path(__file__).resolve().parent
+    extract_dir = script_dir.parent.parent / "data_extracted"
+    extract_dir.mkdir(parents=True, exist_ok=True)
+    
+    ruta_zip = script_dir.parent.parent / "data" / "data.zip"
+    with zipfile.ZipFile(ruta_zip, "r") as zip_ref:
+        zip_ref.extractall(extract_dir)
+        
+    csv_files = list(extract_dir.rglob("*.csv"))
+    df = pd.read_csv(csv_files[0])
+    
+    # 2. Limpieza básica requerida para el modelo
+    columns_to_drop = ["id", "Unnamed: 32"]
+    df = df.drop(columns=[col for col in columns_to_drop if col in df.columns])
+    df["diagnosis"] = df["diagnosis"].map({"M": 1, "B": 0})
+    
+    print("--- 1. Preparando datos ---")
+    X, y, X_train, X_test, y_train, y_test = prepare_data(df)
+    
+    print("\n--- 2. Entrenando modelos ---")
+    models = train_models(X_train, y_train)
+    
+    print("\n--- 3. Evaluando modelos ---")
+    results = evaluate_models(models, X_test, y_test)
+    
+    print("\n--- 4. Importancia de variables (Random Forest) ---")
+    random_forest_feature_importance(models["Random Forest"], X.columns)
+    
+    

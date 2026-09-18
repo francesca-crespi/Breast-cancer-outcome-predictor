@@ -45,3 +45,10 @@ def load_breast_cancer(data_zip_path, extract_dir="data_extracted"):
     print(f"Dataset shape: {data.shape}")
 
     return data
+if __name__ == "__main__":
+    # Ruta al archivo zip según la estructura de tu proyecto
+    script_dir = Path(__file__).resolve().parent
+    ruta_zip = script_dir.parent.parent / "data" / "data.zip"
+    
+    print("--- Ejecutando carga de datos ---")
+    load_breast_cancer(ruta_zip)
